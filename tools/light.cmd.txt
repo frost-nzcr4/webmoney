@@ -1,0 +1,33 @@
+Конвертер ключей WM Keeper Light в PEM формат, для использования с библиотекой.
+Параметры запуска:
+	light.cmd WMID
+Требования:
+	- наличие openssl: http://www.openssl.org/
+	- файл WMID.pfx, содержащий приватный ключ и сертификат
+
+
+
+Информация доступна здесь:
+http://webmoney.ru/rus/developers/interfaces/xml/xml_php/index.shtml
+
+Работа с сертификатами WM Keeper Light (X.509)
+
+После получения и инсталляции в браузер сертификата Light, его необходимо экспортировать в файл. Это будет файл формата PKCS12 c расширением .pfx или .p12. В этом файле содержится приватный ключ и сам сертификат.
+
+Далее его необходимо сконвертировать в формат PEM для работы с CURL. Воспользуемся для этого утилитой openssl из одноименного пакета:
+
+
+$ openssl pkcs12 -in 351237877840.pfx -out 351237877840.key -nocerts
+$ openssl pkcs12 -in 351237877840.pfx -out 351237877840.cer -clcerts -nokeys
+
+Таким образом получили файлы .key и .cer, которые и будем использовать при запросе к w3s. В опции CURL добавляются:
+
+<?php
+        curl_setopt($ch, CURLOPT_SSLKEY, $wmKey);
+        curl_setopt($ch, CURLOPT_SSLKEYPASSWD , $wmPass);
+        curl_setopt($ch, CURLOPT_SSLCERT, $wmCert);
+?>
+
+Где $wmPass - пароль который Вы указали при преобразовании ключа в PEM формат.
+
+Сам XML-запрос тоже меняется. Из него пропадет элемент <sign/>

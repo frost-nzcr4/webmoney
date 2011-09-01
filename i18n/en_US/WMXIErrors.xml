@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wmxierrors>
+	<error code="" scope="*">Undefined error</error>
+
+	<error code=   "0" scope="*">No error</error>
+
+	<error code="-110" scope="*">Requests are sent from a different IP address than the one specified during the registration of the interface with technical support</error>
+	<error code="-100" scope="*">General parsing error. Incorrect request format</error>
+
+	<error code=  "-1" scope="*">Invalid value for w3s.request/reqn</error>
+	<error code=  "-2" scope="*">Invalid value for w3s.request/sign</error>
+	<error code=  "-3" scope="*">Invalid value for w3s.request/trans/tranid</error>
+	<error code=  "-4" scope="*">Invalid value for w3s.request/trans/pursesrc</error>
+	<error code=  "-5" scope="*">Invalid value for w3s.request/trans/pursedest</error>
+	<error code=  "-6" scope="*">Invalid value for w3s.request/trans/amount</error>
+	<error code=  "-7" scope="*">Invalid value for w3s.request/trans/desc</error>
+	<error code=  "-8" scope="*">Field for w3s.request/trans/pcode is too long</error>
+	<error code=  "-9" scope="*">Field w3s.request/trans/pcode should not be empty if w3s.request/trans/period > 0</error>
+	<error code= "-10" scope="*">Field w3s.request/trans/pcode should be empty if w3s.request/trans/period = 0</error>
+	<error code= "-11" scope="*">Invalid value for w3s.request/trans/wminvid</error>
+	<error code= "-12" scope="*">Identifier sent for w3s.request/wmid is not registered</error>
+	<error code= "-14" scope="*">Signature verification failed</error>
+	<error code= "-15" scope="*">Invalid value for w3s.request/wmid</error>
+
+	<error code=   "4" scope="*">Internal error when creating transaction</error>
+	<error code=   "5" scope="*">Sender’s WMID not found</error>
+	<error code=   "6" scope="*">Correspondent not found</error>
+	<error code=   "7" scope="*">Recipient’s WM purse not found</error>
+	<error code=  "11" scope="*">Sender’s WM purse not found</error>
+	<error code=  "13" scope="*">Transaction amount should be > 0</error>
+	<error code=  "15" scope="*">Internal error when creating transaction</error>
+	<error code=  "17" scope="*">Insufficient amount of funds in the purse</error>
+	<error code=  "19" scope="*">Internal error when creating transaction</error>
+	<error code=  "21" scope="*">The invoice for this transaction was not found</error>
+	<error code=  "22" scope="*">Code-protected transfer for this invoice is not available</error>
+	<error code=  "23" scope="*">Internal error when creating transaction</error>
+	<error code=  "25" scope="*">The invoice validity period has expired</error>
+	<error code=  "26" scope="*">Different purses should be used for this operation</error>
+	<error code=  "29" scope="*">The types of purses are different</error>
+	<error code=  "30" scope="*">Purse doesn’t support direct transfers</error>
+	<error code=  "35" scope="*">Payer is not authorized by the correspondent to execute this operation</error>
+	<error code=  "58" scope="*">Funds limit for the recipient’s purses has been exceeded</error>
+	<error code= "102" scope="*">The requirement for constant increase in the w3s.request/reqn parameter has not been met</error>
+	<error code= "103" scope="*">A transaction with the submitted value for w3s.request/trans/tranid has already been executed</error>
+	<error code= "110" scope="*">No access to interface</error>
+	<error code= "111" scope="*">Attempt to transfer funds from a WM purse which does not belong to the WMID used to sign the request; Security trust has not been established</error>
+
+	<error code=  "-1" scope="X1">Invalid value in w3s.request/invoice/orderid field</error>
+	<error code=  "-2" scope="X1">Invalid value in w3s.request/invoice/customerwmid field</error>
+	<error code=  "-3" scope="X1">Invalid value in w3s.request/invoice/storepurse field</error>
+	<error code=  "-5" scope="X1">Invalid value in w3s.request/invoice/amount field</error>
+	<error code=  "-6" scope="X1">Field in w3s.request/invoice/desc is too long</error>
+	<error code=  "-7" scope="X1">Field in w3s.request/invoice/address is too long</error>
+	<error code=  "-8" scope="X1">Invalid value in w3s.request/sign field</error>
+	<error code=  "-9" scope="X1">Invalid value in w3s.request/reqn field</error>
+	<error code= "-11" scope="X1">Identifier sent in w3s.request/wmid is not registered</error>
+	<error code= "-12" scope="X1">Signature verification failed</error>
+
+	<error code=   "5" scope="X1">Invoice sender was not found</error>
+	<error code=   "6" scope="X1">Invoice recipient was not found</error>
+	<error code=   "7" scope="X1">Invoice sender was not found</error>
+
+	<error code=  "20" scope="X5">Protection code was invalid but there are still attempts left</error>
+
+	<error code=  "-2" scope="X6">Wrong value of message field\receiverwmid</error>
+	<error code= "-12" scope="X6">Signature is invalid</error>
+
+	<error code=   "0" scope="X8">No entries found</error>
+	<error code=   "1" scope="X8">Search successful</error>
+
+	<error code=   "1" scope="X11">Wrong request format</error>
+	<error code=   "2" scope="X11">Wrong passportwmid parameter</error>
+	<error code=   "4" scope="X11">Error verifying signature</error>
+	<error code=  "11" scope="X11">One of parameters is not specified</error>
+
+	<error code=  "15" scope="X16">Internal error of purse creation</error>
+	<error code=  "31" scope="X16">There can be only one purse of the specified type</error>
+	<error code=  "44" scope="X16">This WM-identifier was refused to create a purse of this type</error>
+
+</wmxierrors>
