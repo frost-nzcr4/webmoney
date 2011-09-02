@@ -52,7 +52,7 @@ class WMXICore {
 	 * @param string wmid WMID
 	 * @param array  key  see examples/_header.php.edit
 	 */
-	public function Classic($wmid, $key) {
+	public function Classic($wmid, array $key) {
 		$this->classic = true;
 		$this->light   = false;
 		$this->wmid    = $wmid;
