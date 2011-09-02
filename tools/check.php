@@ -38,7 +38,7 @@
 
 	print("--------- Huge math ---------\n");
 	print("   BCMath     : " . ($matha ? PASSED : FAILED) . "   \n");
-	print("   GMP        : " . ($matha ? PASSED : FAILED) . "   \n");
+	print("   GMP        : " . ($mathb ? PASSED : FAILED) . "   \n");
 	print(" > Overall    : " . ($math  ? PASSED : FAILED) . " < \n");
 	print("\n");
 
