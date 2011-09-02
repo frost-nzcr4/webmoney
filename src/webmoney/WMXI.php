@@ -15,11 +15,8 @@
 if (!defined('__DIR__')) { define('__DIR__', dirname(__FILE__)); }
 require_once(__DIR__ . DIRECTORY_SEPARATOR . 'WMXICore.php');
 
-
 # WMXI class
 class WMXI extends WMXICore {
-
-
 	# interface X1
 	# http://wiki.webmoney.ru/wiki/show/Interfeys_X1
 	public function X1($orderid, $customerwmid, $storepurse, $amount, $desc, $address, $period, $expiration) {
@@ -498,8 +495,37 @@ class WMXI extends WMXICore {
 		return $this->_request($url, $req->asXML(), __FUNCTION__);
 	}
 
+	/**
+	 * Interface X20.
+	 *
+	 * @see https://wiki.webmoney.ru/wiki/show/%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81+X20
+	 */
+	public function X20($wmid, $lmi_payee_purse, $lmi_payment_no, $lmi_payment_amount, $lmi_payment_desc,
+		$lmi_clientnumber, $lmi_clientnumber_type, $lmi_sms_type, $sign, $md5, $secret_key) {
+		$req = new SimpleXMLElement('<merchant.request/>');
 
+		$req->wmid                  = $wmid;
+		$req->lmi_payee_purse       = $lmi_payee_purse;
+		$req->lmi_payment_no        = $lmi_payment_no;
+		$req->lmi_payment_amount    = $lmi_payment_amount;
+		$req->lmi_payment_desc      = $lmi_payment_desc;
+		$req->lmi_clientnumber      = $lmi_clientnumber;
+		$req->lmi_clientnumber_type = $lmi_clientnumber_type;
+		$req->lmi_sms_type          = $lmi_sms_type;
+
+		if ($this->classic) {
+			$req->sign = $this->_sign($wmid . $lmi_payee_purse . $lmi_payment_no
+				. $lmi_clientnumber . $lmi_clientnumber_type);
+		} elseif ($secret_key != '') {
+			$req->md5 = strtoupper(md5($wmid . $lmi_payee_purse . $lmi_payment_no
+				. $lmi_clientnumber . $lmi_clientnumber_type . $secret_key));
+		} else {
+			$req->secret_key = $secret_key;
+		}
+
+		$initial_url = 'https://merchant.webmoney.ru/conf/xml/XMLTransRequest.asp';
+
+		return $this->_request($initial_url, $req->asXML(), __FUNCTION__);
+	}
 }
-
-
 ?>
