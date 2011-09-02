@@ -1,15 +1,29 @@
-WebMoney XML Interfaces
-http://my-tools.net/wmxi/
+Webmoney
+========
 
+WebMoney Transfer payment system API
 
-Форум поддержки: 
+Usage
+-----
 
-http://talk.dkameleon.net/
+Example of usage X2 XML interface:
 
+```php
+require_once (__DIR__ . '/src/webmoney/WMXI.php');
+$Wmxi = new WMXI();
+$Wmxi->Light(/* params */);
+$result = $Wmxi->X2(/* params */);
+```
 
-Советы и подсказки:
+Support
+-------
+
+* http://my-tools.net/wmxi/
+* http://talk.dkameleon.net/
+
+Советы и подсказки
+------------------
 
 При отображении ХМЛ дерева имейте ввиду, что не все ноды могут отображаться,
 тем не менее они присутствуют и к ним можно добраться по дереву.
 Это особенности класса SimpleXML
-
