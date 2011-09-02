@@ -61,6 +61,9 @@ class WMXI extends WMXICore {
 		$req->$group->tranid = $tranid;
 		$req->$group->pursesrc = $pursesrc;
 		$req->$group->pursedest = $pursedest;
+		if (!is_int($amount) && !is_float($amount)) {
+		  $this->convertAmountToProperFormat($amount);
+		}
 		$req->$group->amount = $amount;
 		$req->$group->period = $period;
 		$req->$group->pcode = $pcode;

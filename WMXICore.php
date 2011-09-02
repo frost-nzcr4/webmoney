@@ -90,6 +90,17 @@ class WMXICore {
 		return $this->lastreqn;
 	}
 
+	/**
+	 * Convert amount to proper format.
+	 *
+	 * @param mixed amount Amount.
+	 */
+	public function convertAmountToProperFormat(&$amount) {
+		if (is_string($amount)) {
+			$amount = str_replace(',', '.', $amount);
+			$amount = (float) $amount;
+		}
+	}
 
 	# sign function
 	protected function _sign($text) {
