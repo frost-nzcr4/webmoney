@@ -56,7 +56,7 @@ class WMXICore {
 
 
 	# initialize light
-	public function Light($cert) {
+	public function Light(array $cert) {
 		$this->classic = false;
 		$this->light   = true;
 		$this->cert    = $cert;
@@ -126,7 +126,7 @@ class WMXICore {
 			$scope = 'cURL';
 		}
 		curl_close($ch);
-		
+
 		WMXILogger::Append($result);
 		return class_exists('WMXIResult') ? new WMXIResult($xml, $result, $scope) : $result;
 	}
