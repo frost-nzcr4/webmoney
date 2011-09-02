@@ -77,4 +77,5 @@
 	<error code=  "31" scope="X16">There can be only one purse of the specified type</error>
 	<error code=  "44" scope="X16">This WM-identifier was refused to create a purse of this type</error>
 
+  <error code= "403" scope="cURL">HTTP Code not equal to 200</error>
 </wmxierrors>

@@ -118,10 +118,18 @@ class WMXICore {
 		};
 
 		$result = curl_exec($ch);
+		$info   = curl_getinfo($ch);
+
 		if (curl_errno($ch) != 0) {
 			$result  = "<curl>\n";
 			$result .= "<errno>".curl_errno($ch)."</errno>\n";
 			$result .= "<error>".curl_error($ch)."</error>\n";
+			$result .= "</curl>\n";
+			$scope = 'cURL';
+		} else if (200 !== $info['http_code']) {
+			$result  = "<curl>\n";
+			$result .= "<errno>".$info['http_code']."</errno>\n";
+			$result .= "<error>".'HTTP Code not equal to 200'."</error>\n";
 			$result .= "</curl>\n";
 			$scope = 'cURL';
 		}

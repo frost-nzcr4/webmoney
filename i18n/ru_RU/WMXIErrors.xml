@@ -77,4 +77,5 @@
 	<error code=  "31" scope="X16">Может существовать только один кошелек указанного типа</error>
 	<error code=  "44" scope="X16">Этот WM-идентификатор не может создать кошелек данного типа</error>
 
+  <error code= "403" scope="cURL">HTTP код не равен 200</error>
 </wmxierrors>
