@@ -21,31 +21,37 @@ if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . 'WMXIResult.php')) { include_onc
 
 # WMXICore class
 class WMXICore {
-
-
 	private $cainfo    = '';
 	private $encoding  = 'UTF-8';
 
 	protected $classic = false;
-	protected $wmid    = ''; # classic
-	private   $signer  = null; # classic
+	protected $wmid    = '';      # classic
+	private   $signer  = null;    # classic
 
 	protected $light   = false;
-	private   $cert    = array();  # light (key + cer + pass)
+	private   $cert    = array(); # light (key + cer + pass)
 
 	private $reqn      = 0;
 	private $lastreqn  = 0;
 
-
-	# constructor
+	/**
+	 * WMXI constructor.
+	 *
+	 * @param string cainfo   path to crt file.
+	 * @param string encoding encoding.
+	 */
 	public function __construct($cainfo = '', $encoding = 'UTF-8') {
 		if (!empty($cainfo) && !file_exists($cainfo)) { die("Specified certificates dir $cainfo not found."); }
 		$this->cainfo = $cainfo;
 		$this->encoding = $encoding;
 	}
 
-
-	# initialize classic
+	/**
+	 * Initialize WM Classic.
+	 *
+	 * @param string wmid WMID
+	 * @param array  key  see examples/_header.php.edit
+	 */
 	public function Classic($wmid, $key) {
 		$this->classic = true;
 		$this->light   = false;
@@ -54,14 +60,16 @@ class WMXICore {
 		$this->signer = new WMSigner($wmid, $key);
 	}
 
-
-	# initialize light
+	/**
+	 * Initialize WM Light.
+	 *
+	 * @param array cert see examples/_header.php.edit
+	 */
 	public function Light(array $cert) {
 		$this->classic = false;
 		$this->light   = true;
 		$this->cert    = $cert;
 	}
-
 
 	# generate reqn
 	protected function _reqn() {
