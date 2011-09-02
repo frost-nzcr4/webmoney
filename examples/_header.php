@@ -10,7 +10,7 @@
 
 	# Подключаем классы
 	if (!isset($class)) { $class = 'WMXI'; }
-	require_once("../$class.php");
+	require_once(__DIR__ . "/../src/webmoney/$class.php");
 
 
 	# Режим отладки с сохранением промежуточных результатов в файл
@@ -24,9 +24,9 @@
 	# Создаём объект класса. Передаваемые параметры:
 	# - путь к сертификату, используемому для защиты от атаки с подменой ДНС
 	# - кодировка, используемая на сайте. По умолчанию используется UTF-8
-	$wmxi = new $class(realpath('../WMXI.crt'), 'UTF-8');
+	$wmxi = new $class(realpath(__DIR__ . '/../cert/WMXI.crt'), 'UTF-8');
 
-	
+
 	#/*
 
 	# Инициализация с помощью резервной копии файла ключей
@@ -40,7 +40,7 @@
 	# Параметры инициализации ключем Webmoney Keeper Classic
 	define('WMID', '000000000000');
 	define('PASS', '11111111');
-	define('KWMFILE', '../keys/000000000000.kwm');
+	define('KWMFILE', __DIR__ . '/../keys/000000000000.kwm');
 	# define('KWMDATA', base64_decode(file_get_contents(KWMFILE.'.base64')));
 	# define('EKEY', file_get_contents(KWMFILE.'.ekey'));
 	# define('NKEY', file_get_contents(KWMFILE.'.nkey'));
@@ -48,9 +48,9 @@
 	if (defined('EKEY') && defined('NKEY')) { $wmkey = array('ekey' => EKEY, 'nkey' => NKEY); }
 	elseif (defined('KWMDATA')) { $wmkey = array('pass' => PASS, 'data' => KWMDATA); }
 	elseif (defined('KWMFILE')) { $wmkey = array('pass' => PASS, 'file' => KWMFILE); }
-	if (isset($wmkey)) { $wmxi->Classic(WMID, $wmkey); }	
-		
-	/*/	
+	if (isset($wmkey)) { $wmxi->Classic(WMID, $wmkey); }
+
+	/*/
 
 	# Инициализация с помощью сертификата
 	# от Webmoney Keeper Light. Передаваемые параметры:
@@ -62,19 +62,19 @@
 	define('CER', realpath('../keys/000000000000.cer'));
 	define('KEY', realpath('../keys/000000000000.key'));
 	define('PASS', '11111111');
-	
+
 	if (defined('KEY') && defined('CER') && defined('PASS')) { $wmkey = array('key' => KEY, 'cer' => CER, 'pass' => PASS); }
 	if (isset($wmkey)) { $wmxi->Light($wmkey); }
 
 	#*/
 
-	
+
 	# Дополнительные настройки:
 
 	# Локализация описаний ошибок. По умолчанию en_US, находятся в папке i18n и доступны для перевода.
 	# define('WMXI_LOCALE', 'ru_RU');
 
-	
+
 	# Константы, используемые в примерах
 	define('PRIMARY_WMID',   '058016335779');
 	define('PRIMARY_PURSE', 'Z533988343993');

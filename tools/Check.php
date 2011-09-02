@@ -1,7 +1,7 @@
 <?php
 
 	header('Content-Type: text/plain;');
-	if (file_exists('MD4.php')) { include_once('MD4.php'); }
+	if (file_exists(__DIR__ . '/../src/webmoney/MD4.php')) { include_once (__DIR__ . '/../src/webmoney/MD4.php'); }
 
 	# defining global constants
 	define('PASSED', 'passed [+]');
@@ -22,7 +22,7 @@
 	$mb  = $mba | $mbb;
 
 	$curl = extension_loaded('curl');
-	
+
 	$xml  = extension_loaded('SimpleXML');
 
 	$light   = $mb & $curl & $xml;
