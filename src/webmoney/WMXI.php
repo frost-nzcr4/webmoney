@@ -13,6 +13,7 @@
 
 # including classes
 if (!defined('__DIR__')) { define('__DIR__', dirname(__FILE__)); }
+require_once(__DIR__ . DIRECTORY_SEPARATOR . 'Purse.php');
 require_once(__DIR__ . DIRECTORY_SEPARATOR . 'WMXICore.php');
 
 # WMXI class
