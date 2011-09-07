@@ -10,4 +10,5 @@ if (file_exists(__DIR__ . '/authn.php')) {
 	require_once (__DIR__ . '/authn.dist.php');
 }
 require_once (__DIR__ . '/../src/webmoney/WMXI.php');
+require_once (__DIR__ . '/../src/webmoney/Webmoney.php');
 ?>
