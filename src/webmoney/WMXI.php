@@ -182,10 +182,17 @@ class WMXI extends WMXICore {
 		return $this->_request($url, $req->asXML(), __FUNCTION__);
 	}
 
-
-	# interface X8
-	# http://wiki.webmoney.ru/wiki/show/Interfeys_X8
-	public function X8($wmid, $purse) {
+	/**
+	 * Interface X8.
+	 *
+	 * Retrieving information about purse ownership. Searching for system user by identifier or purse.
+	 *
+	 * @link https://wiki.wmtransfer.com/wiki/show/Interface_X8
+	 * @param mixed  $wmid
+	 * @param string $purse
+	 * @return WMXIResult
+	 */
+	public function X8($wmid = '', $purse = '') {
 		$reqn = $this->_reqn();
 		$req = new SimpleXMLElement('<w3s.request/>');
 		$req->reqn = $reqn;
