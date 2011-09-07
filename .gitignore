@@ -1,2 +1,3 @@
 keys/
+tests/authn.php
 phpunit.xml
