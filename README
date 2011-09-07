@@ -15,6 +15,26 @@ $Wmxi->Light(/* params */);
 $result = $Wmxi->X2(/* params */);
 ```
 
+Certificates
+------------
+
+Source: https://wiki.wmtransfer.com/wiki/show/WebMoney_root_certificate
+
+Folder ./cert/ contains following certificates:
+
+* WebMoneyCA.crt
+
+    WebMoney root certificate.
+
+* WebMoneyCA.pem.crt
+
+    WebMoney root certificate in PEM format (for use with the cURL library).
+
+* WMUsedRootCAs.cer
+
+    Set of WebMoney, Network Solutions and Verisign root certificates
+    (recommended for services and developers using the XML interfaces).
+
 Support
 -------
 
