@@ -505,7 +505,9 @@ class WMXI extends WMXICore {
 	/**
 	 * Interface X20.
 	 *
-	 * @see https://wiki.webmoney.ru/wiki/show/%D0%98%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81+X20
+	 * Making transactions through the merchant.webmoney service without leaving the seller's site (resource, service, application).
+	 *
+	 * @link https://wiki.wmtransfer.com/wiki/show/Interface_X20
 	 */
 	public function X20($wmid, $lmi_payee_purse, $lmi_payment_no, $lmi_payment_amount, $lmi_payment_desc,
 		$lmi_clientnumber, $lmi_clientnumber_type, $lmi_sms_type, $sign, $md5, $secret_key) {
