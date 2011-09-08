@@ -15,8 +15,8 @@
 	<error code=  "-6" scope="*">Неправильное значение w3s.request/trans/amount</error>
 	<error code=  "-7" scope="*">Неправильное значение w3s.request/trans/desc</error>
 	<error code=  "-8" scope="*">Поле w3s.request/trans/pcode слишком длинное</error>
-	<error code=  "-9" scope="*">Поле w3s.request/trans/pcode не должно быть пустым, если w3s.request/trans/period > 0</error>
-	<error code= "-10" scope="*">Поле w3s.request/trans/pcode должно быть пустым, если w3s.request/trans/period = 0</error>
+	<error code=  "-9" scope="*">Поле w3s.request/trans/pcode не должно быть пустым, если w3s.request/trans/period больше чем 0</error>
+	<error code= "-10" scope="*">Поле w3s.request/trans/pcode должно быть пустым, если w3s.request/trans/period равен 0</error>
 	<error code= "-11" scope="*">Неправильное значение w3s.request/trans/wminvid</error>
 	<error code= "-12" scope="*">Идентификатор w3s.request/wmid не зарегистрирован</error>
 	<error code= "-14" scope="*">Проверка подписи не прошла</error>
@@ -27,7 +27,7 @@
 	<error code=   "6" scope="*">Корреспондент не найден</error>
 	<error code=   "7" scope="*">WM кошелек получателя не найден</error>
 	<error code=  "11" scope="*">WM кошелек отправителя не найден</error>
-	<error code=  "13" scope="*">Сумма транзакции должна быть > 0</error>
+	<error code=  "13" scope="*">Сумма транзакции должна быть больше чем 0</error>
 	<error code=  "15" scope="*">Внутренняя ошибка при создании транзакции</error>
 	<error code=  "17" scope="*">Недостаточное колличество средств в кошельке</error>
 	<error code=  "19" scope="*">Внутренняя ошибка при создании транзакции</error>
