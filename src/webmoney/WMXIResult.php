@@ -12,9 +12,9 @@
 
 
 # including classes
-if (!defined('__DIR__')) { define('__DIR__', dirname(__FILE__)); }
-require_once(__DIR__ . DIRECTORY_SEPARATOR . 'WMXILogger.php');
+$dir = (version_compare(phpversion(), '5.3.0', '>=')) ? __DIR__ : dirname(__FILE__);
 
+require_once($dir . DIRECTORY_SEPARATOR . 'WMXILogger.php');
 
 class WMXIResult {
 
@@ -24,7 +24,7 @@ class WMXIResult {
 	private $scope = '';
 
 	private $i18n = null;
-	
+
 
 	public function __construct($req, $res, $scope) {
 		$this->req['str'] = $req;
@@ -42,17 +42,18 @@ class WMXIResult {
 		} catch (Exception $e) {
 			$this->res['obj'] = null;
 		}
-		
+
 		$this->i18n();
 	}
 
-
 	private function i18n() {
+		$dir = (version_compare(phpversion(), '5.3.0', '>=')) ? __DIR__ : dirname(__FILE__);
+
 		if (!defined('WMXI_LOCALE')) { define('WMXI_LOCALE', 'en_US'); };
-		$fname = __DIR__ . DIRECTORY_SEPARATOR . 'i18n' . DIRECTORY_SEPARATOR . WMXI_LOCALE . DIRECTORY_SEPARATOR . 'WMXIErrors.xml'; 
+		$fname = $dir . DIRECTORY_SEPARATOR . 'i18n' . DIRECTORY_SEPARATOR . WMXI_LOCALE . DIRECTORY_SEPARATOR . 'WMXIErrors.xml';
 		$this->i18n = file_exists($fname) ? new SimpleXMLElement(file_get_contents($fname)) : null;
 	}
-	
+
 
 	public function toString() {
 		return $this->res['str'];
@@ -74,28 +75,28 @@ class WMXIResult {
 		return $this->toArrayMap($this->res['obj']);
 	}
 
-	
+
 	public function GetRequest($plain = true) {
 		return $this->req[$plain ? 'str' : 'obj'];
 	}
-	
-	
+
+
 	public function GetResponse($plain = true) {
 		return $this->res[$plain ? 'str' : 'obj'];
 	}
-	
-	
+
+
 	public function ErrorCode() {
 		if (!$this->res['obj']) { return false; }
 		$obj = $this->res['obj'];
-		
+
 		# cURL error code
 		if (isset($obj->errno )) { return intval($obj->errno ); }
 
 		# WMXI error code
 		if (isset($obj->retval)) { return intval($obj->retval); }
 		if (isset($obj['retval'])) { return intval($obj['retval']); }
-		
+
 		# no suitable error code detected
 		return false;
 	}
@@ -119,7 +120,7 @@ class WMXIResult {
 			if (strval($v['code']) == strval($code)) { $result[$scope] = $value; }
 		}
 
-		if (isset($result[$this->scope])) { return $result[$this->scope].$message; } 
+		if (isset($result[$this->scope])) { return $result[$this->scope].$message; }
 		if (isset($result['*'])) { return $result['*'].$message; }
 		if (isset($result[''])) { return $result[''].$message; }
 		return false;

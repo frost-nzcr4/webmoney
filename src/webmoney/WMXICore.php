@@ -13,10 +13,11 @@
 
 
 # including classes
-if (!defined('__DIR__')) { define('__DIR__', dirname(__FILE__)); }
-require_once(__DIR__ . DIRECTORY_SEPARATOR . 'WMXILogger.php');
-if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . 'WMSigner.php'  )) { include_once(__DIR__ . DIRECTORY_SEPARATOR . 'WMSigner.php'  ); }
-if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . 'WMXIResult.php')) { include_once(__DIR__ . DIRECTORY_SEPARATOR . 'WMXIResult.php'); }
+$dir = (version_compare(phpversion(), '5.3.0', '>=')) ? __DIR__ : dirname(__FILE__);
+
+require_once($dir . DIRECTORY_SEPARATOR . 'WMXILogger.php');
+if (file_exists($dir . DIRECTORY_SEPARATOR . 'WMSigner.php'  )) { include_once($dir . DIRECTORY_SEPARATOR . 'WMSigner.php'  ); }
+if (file_exists($dir . DIRECTORY_SEPARATOR . 'WMXIResult.php')) { include_once($dir . DIRECTORY_SEPARATOR . 'WMXIResult.php'); }
 
 
 # WMXICore class

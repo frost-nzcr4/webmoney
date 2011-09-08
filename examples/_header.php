@@ -7,14 +7,11 @@
 #                                                                              #
 ################################################################################
 
-// if PHP lt 5.3
-if (!defined('__DIR__')) {
-  define('__DIR__', dirname(__FILE__));
-}
+$dir = (version_compare(phpversion(), '5.3.0', '>=')) ? __DIR__ : dirname(__FILE__);
 
 	# Подключаем классы
 	if (!isset($class)) { $class = 'WMXI'; }
-	require_once(__DIR__ . "/../src/webmoney/$class.php");
+	require_once($dir . "/../src/webmoney/$class.php");
 
 
 	# Режим отладки с сохранением промежуточных результатов в файл
@@ -28,7 +25,7 @@ if (!defined('__DIR__')) {
 	# Создаём объект класса. Передаваемые параметры:
 	# - путь к сертификату, используемому для защиты от атаки с подменой ДНС
 	# - кодировка, используемая на сайте. По умолчанию используется UTF-8
-	$wmxi = new $class(realpath(__DIR__ . '/../cert/WMXI.crt'), 'UTF-8');
+	$wmxi = new $class(realpath($dir . '/../cert/WMXI.crt'), 'UTF-8');
 
 
 	#/*
@@ -44,7 +41,7 @@ if (!defined('__DIR__')) {
 	# Параметры инициализации ключем Webmoney Keeper Classic
 	define('WMID', '000000000000');
 	define('PASS', '11111111');
-	define('KWMFILE', __DIR__ . '/../keys/000000000000.kwm');
+	define('KWMFILE', $dir . '/../keys/000000000000.kwm');
 	# define('KWMDATA', base64_decode(file_get_contents(KWMFILE.'.base64')));
 	# define('EKEY', file_get_contents(KWMFILE.'.ekey'));
 	# define('NKEY', file_get_contents(KWMFILE.'.nkey'));

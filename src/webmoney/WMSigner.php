@@ -13,9 +13,10 @@
 
 
 # including classes
-if (!defined('__DIR__')) { define('__DIR__', dirname(__FILE__)); }
-require_once(__DIR__ . DIRECTORY_SEPARATOR . 'WMXILogger.php');
-if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . 'MD4.php')) { include_once(__DIR__ . DIRECTORY_SEPARATOR . 'MD4.php'); }
+$dir = (version_compare(phpversion(), '5.3.0', '>=')) ? __DIR__ : dirname(__FILE__);
+
+require_once($dir . DIRECTORY_SEPARATOR . 'WMXILogger.php');
+if (file_exists($dir . DIRECTORY_SEPARATOR . 'MD4.php')) { include_once($dir . DIRECTORY_SEPARATOR . 'MD4.php'); }
 
 
 # WMSigner class
@@ -28,7 +29,7 @@ class WMSigner {
 
 	private $md4_use  = '';
 	private $math_use = '';
-	
+
 	private $md4     = null;
 
 	# debug switch
@@ -37,12 +38,12 @@ class WMSigner {
 	# constructor
 	public function __construct($wmid, $key) {
 		$this->debug = defined('WMXI_LOG');
-	
+
 		$this->math_use = $this->InitMath();
 		$this->md4_use  = $this->InitMD4();
 		WMXILogger::Append("\$this->math_use = ".$this->math_use.";");
 		WMXILogger::Append("\$this->md4_use = ".$this->md4_use.";");
-	
+
 		$this->wmid = $wmid;
 
 		# loading e-n-key
@@ -86,14 +87,14 @@ class WMSigner {
 			}
 			die('Can not use WMXI_MATH = '. WMXI_MATH);
 		} else {
-			if (extension_loaded('gmp')) { return 'gmp'; } 
-			if (function_exists('bcpowmod')) { return 'bcmath5'; } 
-			if (extension_loaded('bcmath')) { return 'bcmath4'; } 
+			if (extension_loaded('gmp')) { return 'gmp'; }
+			if (function_exists('bcpowmod')) { return 'bcmath5'; }
+			if (extension_loaded('bcmath')) { return 'bcmath4'; }
 			die('Supported math implementations not found.');
 		}
 	}
 
-	
+
 	# MD4 init
 	private function InitMD4() {
 		if (defined('WMXI_MD4')) {
@@ -117,7 +118,7 @@ class WMSigner {
 	private function _strlen($data) {
 		return mb_strlen($data, 'windows-1251');
 	}
-	
+
 	# md4 wrapper
 	private function _md4($data) {
 		if ($this->md4_use == 'mhash') { return mhash(MHASH_MD4, $data); }

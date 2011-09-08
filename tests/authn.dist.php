@@ -9,15 +9,17 @@ class WebmoneyAuthn {
 	 * @return array
 	 */
 	public static function getAuthn() {
+		$dir = (version_compare(phpversion(), '5.3.0', '>=')) ? __DIR__ : dirname(__FILE__);
+
 		$webmoney_authn = array(
 			'wmid'  => '123456789012',
 			'purse' => 'R123456789019',
-			'cert'  => realpath(__DIR__.'/../cert/WebMoneyCA.crt'),
+			'cert'  => realpath($dir . '/../cert/WebMoneyCA.crt'),
 
 			// Webmoney Keeper Light
 			'light' => array(
-				'key'  => realpath(__DIR__.'/../keys/webmoney-light.key'),
-				'cer'  => realpath(__DIR__.'/../keys/webmoney-light.cer'),
+				'key'  => realpath($dir . '/../keys/webmoney-light.key'),
+				'cer'  => realpath($dir . '/../keys/webmoney-light.cer'),
 				'pass' => 'my-secret-password'
 			),
 

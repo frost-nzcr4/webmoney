@@ -12,9 +12,9 @@
 
 
 # including classes
-if (!defined('__DIR__')) { define('__DIR__', dirname(__FILE__)); }
-require_once(__DIR__ . DIRECTORY_SEPARATOR . 'WMXILogger.php');
-if (file_exists(__DIR__ . DIRECTORY_SEPARATOR . 'WMXIResult.php')) { include_once(__DIR__ . DIRECTORY_SEPARATOR . 'WMXIResult.php'); }
+$dir = (version_compare(phpversion(), '5.3.0', '>=')) ? __DIR__ : dirname(__FILE__);
+require_once($dir . DIRECTORY_SEPARATOR . 'WMXILogger.php');
+if (file_exists($dir . DIRECTORY_SEPARATOR . 'WMXIResult.php')) { include_once($dir . DIRECTORY_SEPARATOR . 'WMXIResult.php'); }
 
 
 # WMXILogin class
@@ -23,20 +23,20 @@ class WMXILogin {
 	private $urlId      = '';
 	private $siteHolder = '';
 	private $LastAuth   = array();
-	
+
 	private $cainfo     = '';
 
-	
+
 	# constructor
 	public function __construct($urlId, $siteHolder, $cainfo = '') {
 		$this->urlId = $urlId;
 		$this->siteHolder = $siteHolder;
-		
+
 		if (!empty($cainfo) && !file_exists($cainfo)) { die("Specified certificates dir $cainfo not found."); }
 		$this->cainfo = $cainfo;
 	}
 
-	
+
 	# request to server
 	protected function _request($url, $xml, $scope = '') {
 		WMXILogger::Append($xml);
@@ -63,11 +63,11 @@ class WMXILogin {
 			$scope = 'cURL';
 		}
 		curl_close($ch);
-		
+
 		WMXILogger::Append($result);
 		return class_exists('WMXIResult') ? new WMXIResult($xml, $result, $scope) : $result;
 	}
-	
+
 
 	private function CheckParams() {
 		$params = array(
@@ -80,33 +80,33 @@ class WMXILogin {
 			'WmLogin_UserAddress' => '#^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$#',
 			'WmLogin_WMID' => '#^\d{12}$#',
 		);
-		
+
 		$result = array();
 		foreach($params as $k => $v) {
 			$val = isset($_POST[$k]) ? $_POST[$k] : '';
 			if (preg_match($v, $val, $m)) { $result[$k] = $val; }
 		}
-		
+
 		return $result;
 	}
-	
+
 
 	public function Login() {
 		header('Location: https://login.wmtransfer.com/GateKeeper.aspx?RID='.$this->urlId);
 		die();
 	}
-	
-	
+
+
 	public function LastAuth() {
 		return $this->LastAuth;
 	}
-	
-	
+
+
 	public function Expired() {
 		echo strtotime($this->LastAuth['WmLogin_Expires'].' UTC') - time() < 0;
 	}
-	
-	
+
+
 	# interface authorize.xiface
 	# https://login.wmtransfer.com/Help.aspx?AK=ws/xmliface
 	public function Authorize() {
@@ -114,7 +114,7 @@ class WMXILogin {
 		if (count($params) != 8) { return false; }
 		$this->LastAuth = $params;
 		if ($this->Expired()) { return false; }
-		
+
 		$req = new SimpleXMLElement('<request/>');
 
 		$req->siteHolder = $this->siteHolder;
@@ -127,7 +127,7 @@ class WMXILogin {
 
 		return $this->_request($url, $req->asXML(), __FUNCTION__);
 	}
-	
+
 	# auth shortcut
 	public function AuthorizeWMID() {
 		$res = $this->Authorize();

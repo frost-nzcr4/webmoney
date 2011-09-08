@@ -10,11 +10,11 @@
 #                                                                              #
 ################################################################################
 
-
 # including classes
-if (!defined('__DIR__')) { define('__DIR__', dirname(__FILE__)); }
-require_once(__DIR__ . DIRECTORY_SEPARATOR . 'Purse.php');
-require_once(__DIR__ . DIRECTORY_SEPARATOR . 'WMXICore.php');
+$dir = (version_compare(phpversion(), '5.3.0', '>=')) ? __DIR__ : dirname(__FILE__);
+
+require_once($dir . DIRECTORY_SEPARATOR . 'Purse.php');
+require_once($dir . DIRECTORY_SEPARATOR . 'WMXICore.php');
 
 # WMXI class
 class WMXI extends WMXICore {
