@@ -1,9 +1,13 @@
 <?php
 $dir = (version_compare(phpversion(), '5.3.0', '>=')) ? __DIR__ : dirname(__FILE__);
-	header('Content-Type: text/plain;');
+
+header('Content-Type: text/plain;');
+print("\n");
+print('Webmoney config check'."\n");
+print('============================='."\n\n");
+
 	if (file_exists($dir . '/../src/webmoney/MD4.php')) { include_once ($dir . '/../src/webmoney/MD4.php'); }
 
-	# defining global constants
 	define('PASSED', 'passed [+]');
 	define('FAILED', 'failed [-]');
 
@@ -71,4 +75,33 @@ $dir = (version_compare(phpversion(), '5.3.0', '>=')) ? __DIR__ : dirname(__FILE
 	print(" > Overall    : " . ($light   ? PASSED : FAILED) . " < \n");
 	print("\n");
 
+// Optional checks
+// array_fill_keys (PHP >= 5.2.0)
+$optional_keys = array('PHP', 'PHPUnit');
+$check = array(
+	'optional' => array_fill_keys($optional_keys, false)
+);
+
+$check['optional']['PHP']['msg'] = 'PHP version >= 5.3.0';
+if (version_compare(phpversion(), '5.3.0', '>=')) {
+	$check['optional']['PHP']['pass'] = true;
+} else {
+	$check['optional']['PHP']['msg'] .= ' (PHP ' . phpversion() . ' is installed)';
+}
+
+$check['optional']['PHPUnit']['msg'] = 'PHPUnit is installed';
+include_once ('PHPUnit/Autoload.php');
+if (class_exists('PHPUnit_Framework_TestCase')) {
+	$check['optional']['PHPUnit']['pass'] = true;
+} else {
+	$check['optional']['PHPUnit']['msg'] .= ' (https://github.com/sebastianbergmann/phpunit)';
+}
+
+// Output
+print('Optional'."\n");
+print('-----------------------------'."\n");
+foreach ($check['optional'] as $key => $val) {
+	print(($val['pass'] ? '[+]   ' : '[fail]') . ' ' . $val['msg'] ."\n");
+}
+print("\n");
 ?>
