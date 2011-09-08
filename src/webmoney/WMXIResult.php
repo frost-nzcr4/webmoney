@@ -17,14 +17,11 @@ $dir = (version_compare(phpversion(), '5.3.0', '>=')) ? __DIR__ : dirname(__FILE
 require_once($dir . DIRECTORY_SEPARATOR . 'WMXILogger.php');
 
 class WMXIResult {
-
-
 	private $req = array();
 	private $res = array();
 	private $scope = '';
 
 	private $i18n = null;
-
 
 	public function __construct($req, $res, $scope) {
 		$this->req['str'] = $req;
@@ -42,8 +39,6 @@ class WMXIResult {
 		} catch (Exception $e) {
 			$this->res['obj'] = null;
 		}
-
-		$this->i18n();
 	}
 
 	private function i18n() {
@@ -54,27 +49,22 @@ class WMXIResult {
 		$this->i18n = file_exists($fname) ? new SimpleXMLElement(file_get_contents($fname)) : null;
 	}
 
-
 	public function toString() {
 		return $this->res['str'];
 	}
 
-
 	public function toObject() {
 		return $this->res['obj'];
 	}
-
 
 	private function toArrayMap($data) {
 		if (is_object($data)) { $data = get_object_vars($data); }
 		return is_array($data) ? array_map(array($this, __METHOD__), $data) : $data;
 	}
 
-
 	public function toArray() {
 		return $this->toArrayMap($this->res['obj']);
 	}
-
 
 	public function GetRequest($plain = true) {
 		return $this->req[$plain ? 'str' : 'obj'];
@@ -101,7 +91,6 @@ class WMXIResult {
 		return false;
 	}
 
-
 	public function ErrorText($code = false) {
 		if ($code === false) { $code = $this->ErrorCode(); }
 		if ($code === false) { return false; }
@@ -112,8 +101,10 @@ class WMXIResult {
 		if (isset($obj->retdesc)) { $message = strval($obj->retdesc); }
 		$message = !empty($message) ? " [$message]" : '';
 
+		$this->i18n();
+
 		$result = array();
-		foreach($this->i18n as $k => $v) {
+		foreach ($this->i18n as $k => $v) {
 			$scope = strval($v['scope']);
 			$value = strval($v[0]);
 			if (strval($v['code']) == '') { $result[''] = $value; }
@@ -162,9 +153,5 @@ class WMXIResult {
 
 		return $res;
 	}
-
-
 }
-
-
 ?>
