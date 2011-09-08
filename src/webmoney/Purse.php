@@ -14,6 +14,13 @@ class Purse {
 	private $id = '';
 
 	/**
+	 * Purse type (WMZ, WMR, etc).
+	 *
+	 * @var string
+	 */
+	private $type = '';
+
+	/**
 	 * WMID.
 	 *
 	 * @var string
@@ -40,6 +47,7 @@ class Purse {
 
 		$this->wmid = $wmid;
 		$this->id   = $purseId;
+		$this->type = 'WM' . substr($purseId, 0, 1);
 	}
 
 	/**
@@ -101,6 +109,15 @@ class Purse {
 	 */
 	public function getId() {
 	  return $this->id;
+	}
+
+	/**
+	 * Get purse type.
+	 *
+	 * @return string
+	 */
+	public function getType() {
+		return $this->type;
 	}
 
 	/**
