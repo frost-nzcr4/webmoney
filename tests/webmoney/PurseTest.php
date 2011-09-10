@@ -12,20 +12,32 @@ class PurseTest extends PHPUnit_Framework_TestCase {
 	public static function InvalidDataProvider() {
 		return array(
 			array(
-				'12345',
-				'R12345'),
+				'R12345',
+				'12345'),
 			array(
-				'12345678901234567890',
-				'R12345678901234567890'),
+				'R12345678901234567890',
+				'12345678901234567890'),
 			array(
 				'123456789012',
 				'123456789012'),
 			array(
-				'123456789012',
-				'L123456789012'),
+				'L123456789012',
+				'123456789012'),
+			array(
+				'R123456789012',
+				'123456789012'),
+			array(
+				'R12345',
+				''),
+			array(
+				'R12345678901234567890',
+				''),
 			array(
 				'123456789012',
-				'R123456789012')
+				''),
+			array(
+				'L123456789012',
+				'')
 		);
 	}
 
@@ -33,19 +45,25 @@ class PurseTest extends PHPUnit_Framework_TestCase {
 	 * @dataProvider InvalidDataProvider
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testInvalidData($wmid, $purseId) {
-		$Purse = new Purse($wmid, $purseId);
+	public function testInvalidData($purseId, $wmid) {
+		$Purse = new Purse($purseId, $wmid);
 	}
 
 	public function testValidData() {
 		$wmid  = $this->authn['wmid'];
 		$purse = $this->authn['purse'];
 
-		$Purse = new Purse($wmid, $purse);
+		$Purse = new Purse($purse, $wmid);
 		$this->assertInstanceOf('Purse', $Purse);
 		$this->assertEquals($purse, $Purse->getId());
 		$this->assertEquals($wmid, $Purse->getWmid());
 
+		$Purse = new Purse($purse, '');
+		$this->assertInstanceOf('Purse', $Purse);
+		$this->assertEquals($purse, $Purse->getId());
+		$this->assertEquals('', $Purse->getWmid());
+
+		$Purse->isValid($this->Webmoney);
 		$this->assertEquals(true, $Purse->isValid($this->Webmoney));
 		//$this->assertEquals(true, $Purse->getResultX8());
 	}

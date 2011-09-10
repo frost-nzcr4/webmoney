@@ -42,26 +42,34 @@ class Purse {
 	private $wmid = '';
 
 	/**
-	 * Construct the purse with given WMID and PurseID.
+	 * Construct the purse with given Purse ID or Purse ID and WMID.
 	 *
-	 * @param mixed  $wmid
-	 * @param string $purseId
+	 * @param string purseId
+	 * @param mixed  wmid
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct($wmid, $purseId) {
-		if (!(self::testWmid($wmid) && self::testId($purseId) && self::testWmidAndPurse($wmid, $purseId))) {
+	public function __construct($purseId, $wmid = '') {
+		if (!self::testId($purseId)) {
 			ob_start();
-			echo '$wmid=';
-			var_dump($wmid);
 			echo '$purseId=';
 			var_dump($purseId);
+			throw new InvalidArgumentException('Argument $purseId is invalid. ' . ob_get_clean());
+		}
+		if ('' !== $wmid) {
+			if (!(self::testWmid($wmid) && self::testWmidAndPurse($wmid, $purseId))) {
+			  ob_start();
+			  echo '$wmid=';
+			  var_dump($wmid);
+			  echo '$purseId=';
+			  var_dump($purseId);
 
-			throw new InvalidArgumentException(ob_get_clean());
+			  throw new InvalidArgumentException('Arguments $purseId and/or $wmid are invalid. ' . ob_get_clean());
+			}
 		}
 
-		$this->wmid = $wmid;
 		$this->id   = $purseId;
 		$this->type = 'WM' . substr($purseId, 0, 1);
+		$this->wmid = $wmid;
 	}
 
 	/**

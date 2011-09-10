@@ -12,11 +12,11 @@ class WebmoneyTest extends PHPUnit_Framework_TestCase {
 	public static function InvalidDataProvider() {
 		$wmid    = $this->authn['wmid'];
 		$purseId = $this->authn['purse'];
-		$srcPurse = new Purse($wmid, $purseId);
+		$srcPurse = new Purse($purseId, $wmid);
 
 		$wmid    = $this->authn['wmid'];
 		$purseId = $this->authn['purse'];
-		$dstPurse = new Purse($wmid, $purseId);
+		$dstPurse = new Purse($purseId, $wmid);
 
 		return array(
 	  	array(
@@ -39,7 +39,7 @@ class WebmoneyTest extends PHPUnit_Framework_TestCase {
 	public function testTransferFunds() {
 		$wmid    = $this->authn['wmid'];
 		$purseId = $this->authn['purse'];
-		$srcPurse = new Purse($wmid, $purseId);
+		$srcPurse = new Purse($purseId, $wmid);
 
 		// Search yourself by your WMID & Purse ID.
 		$result = $this->Webmoney->X8($srcPurse->getWmid(), $srcPurse->getId());
@@ -47,7 +47,7 @@ class WebmoneyTest extends PHPUnit_Framework_TestCase {
 
 		$wmid    = $this->authn['wmid'];
 		$purseId = $this->authn['purse'];
-		$dstPurse = new Purse($wmid, $purseId);
+		$dstPurse = new Purse($purseId, $wmid);
 
 		// Search destination purse by WMID & Purse ID.
 		$result = $this->Webmoney->X8($dstPurse->getWmid(), $dstPurse->getId());
