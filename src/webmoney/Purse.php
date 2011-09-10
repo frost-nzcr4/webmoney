@@ -14,6 +14,20 @@ class Purse {
 	private $id = '';
 
 	/**
+	 * Is purse valid.
+	 *
+	 * @var bool
+	 */
+	private $isValid = false;
+
+	/**
+	 * Result of X8 interface call.
+	 *
+	 * @var SimpleXMLElement
+	 */
+	private $resultX8 = null;
+
+	/**
 	 * Purse type (WMZ, WMR, etc).
 	 *
 	 * @var string
@@ -48,6 +62,23 @@ class Purse {
 		$this->wmid = $wmid;
 		$this->id   = $purseId;
 		$this->type = 'WM' . substr($purseId, 0, 1);
+	}
+
+	/**
+	 * Check if purse is valid.
+	 *
+	 * @return bool
+	 */
+	public function isValid(Webmoney &$Webmoney) {
+		// :TODO: Purse should have access to WMXI::X8?
+		if (is_null($this->resultX8)) {
+			$this->resultX8 = $Webmoney->X8($this->getWmid(), $this->getId());
+			if (1 === $this->resultX8->ErrorCode()) {
+			  $this->isValid = true;
+			}
+		}
+
+		return $this->isValid;
 	}
 
 	/**
@@ -109,6 +140,15 @@ class Purse {
 	 */
 	public function getId() {
 	  return $this->id;
+	}
+
+	/**
+	 * Get result of X8 interface call.
+	 *
+	 * @return SimpleXMLElement
+	 */
+	public function getResultX8() {
+		return $this->resultX8;
 	}
 
 	/**

@@ -5,7 +5,7 @@ class PurseTest extends PHPUnit_Framework_TestCase {
 
 	protected function setUp() {
 		$this->authn = WebmoneyAuthn::getAuthn();
-		$this->Webmoney = new Webmoney();
+		$this->Webmoney = new Webmoney($this->authn['cert']);
 		$this->Webmoney->Light($this->authn['light']);
 	}
 
@@ -45,6 +45,9 @@ class PurseTest extends PHPUnit_Framework_TestCase {
 		$this->assertInstanceOf('Purse', $Purse);
 		$this->assertEquals($purse, $Purse->getId());
 		$this->assertEquals($wmid, $Purse->getWmid());
+
+		$this->assertEquals(true, $Purse->isValid($this->Webmoney));
+		//$this->assertEquals(true, $Purse->getResultX8());
 	}
 }
 ?>
