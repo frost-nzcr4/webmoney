@@ -25,6 +25,10 @@ class WebmoneyAuthn {
 
 			'publicWmids' => array(
 				'WmAttestationCenter' => '464889785562'
+			),
+
+			'publicPurses' => array(
+				'somebody' => 'R111222333444'
 			)
 		);
 

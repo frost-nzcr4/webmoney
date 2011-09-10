@@ -45,8 +45,8 @@ class WebmoneyTest extends PHPUnit_Framework_TestCase {
 		$result = $this->Webmoney->X8($srcPurse->getWmid(), $srcPurse->getId());
 		$this->assertEquals(1, $result->ErrorCode());
 
-		$wmid    = $this->authn['wmid'];
-		$purseId = $this->authn['purse'];
+		$wmid    = '';
+		$purseId = $this->authn['publicPurses']['somebody'];
 		$dstPurse = new Purse($purseId, $wmid);
 
 		// Search destination purse by WMID & Purse ID.
