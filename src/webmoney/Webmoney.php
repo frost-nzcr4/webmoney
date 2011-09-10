@@ -101,11 +101,17 @@ class Webmoney extends WMXI {
 			}
 		}
 
+		if (!$src->isValid($this)) {
+			throw new InvalidArgumentException('Argument $src is invalid');
+		}
+
+		$result_src = $src->getResultX8();
+/*
 		$result_src = $this->X8($src->getWmid(), $src->getId());
 		if (1 !== $result_src->ErrorCode()) {
 			return array(false, $result_src);
 		}
-
+*/
 		// :TODO: should it be tested within purse?
 		if (
 			$src->getWmid() !== strval($result_src->toObject()->testwmpurse->wmid)
@@ -113,11 +119,18 @@ class Webmoney extends WMXI {
 			$src->getId() !== strval($result_src->toObject()->testwmpurse->purse)) {
 			return array(false, $result_src);
 		}
-
+/*
 		$result_dst = $this->X8($dst->getWmid(), $dst->getId());
 		if (1 !== $result_dst->ErrorCode()) {
 		  return array(false, $result_dst, $result_src);
 		}
+*/
+		if (!$dst->isValid($this)) {
+			throw new InvalidArgumentException('Argument $dst is invalid');
+		  //return array(false, $dst->getResultX8(), $result_src);
+		}
+
+		$result_dst = $src->getResultX8();
 
 		if (1 === (int) $result_dst->toObject()->testwmpurse->wmid->attributes()->available) {
 			// The available attribute, if “1”, means that ALL incoming operations (direct payments,
