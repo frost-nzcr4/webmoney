@@ -10,21 +10,34 @@ class WebmoneyTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public static function InvalidDataProvider() {
-		$wmid    = $this->authn['wmid'];
-		$purseId = $this->authn['purse'];
+		$authn   = WebmoneyAuthn::getAuthn();
+		$wmid    = $authn['wmid'];
+		$purseId = $authn['purse'];
 		$srcPurse = new Purse($purseId, $wmid);
 
-		$wmid    = $this->authn['wmid'];
-		$purseId = $this->authn['purse'];
+		$wmid    = $authn['wmid'];
+		$purseId = $authn['purse'];
 		$dstPurse = new Purse($purseId, $wmid);
 
+		$amount_pass = 0.01;
+		$amount_fail1 = 0.001;
+		$amount_fail2 = -1;
+
+		$period_pass = 0;
+		$period_fail1 = 256;
+		$period_fail2 = -1;
+
+		$pcode_pass1  = '';
+		$pcode_pass2  = 'my protection code';
+		$pcode_fail1 = '';
+		$pcode_fail2 = 'my protection code when $period=0';
+		$pcode_fail3 = str_repeat('a', 256);
+		$pcode_fail4 = ' leading space';
+		$pcode_fail5 = 'space at the end ';
+
 		return array(
-	  	array(
-				$srcPurse,
-				$dstPurse,
-				0,
-				0.001,
-				0)
+	  	array($srcPurse, $srcPurse, 0, $amount_pass, $period_pass, '', '', 0, 0),
+			array($srcPurse, $srcPurse, 0, -1, 0, '', '', 0, 0)
 	  );
 	}
 
@@ -49,14 +62,7 @@ class WebmoneyTest extends PHPUnit_Framework_TestCase {
 		$purseId = $this->authn['publicPurses']['somebody'];
 		$dstPurse = new Purse($purseId, $wmid);
 
-		// Search destination purse by WMID & Purse ID.
-		$result = $this->Webmoney->X8($dstPurse->getWmid(), $dstPurse->getId());
-		$this->assertEquals(1, $result->ErrorCode());
-		$this->assertEquals(123, (int) $result->toObject()->testwmpurse->wmid->attributes()->available);
-		$this->assertEquals(123, (int) $result->toObject()->testwmpurse->wmid->attributes()->themselfcorrstate);
-		$this->assertEquals(1, $result);
-
-		$result = $this->Webmoney->transferFunds($srcPurse, $dstPurse, 0.001);
+		$result = $this->Webmoney->transferFunds($srcPurse, $dstPurse, 0, 0.01, 0, '', 'Test', 0, 1);
 		$this->assertEquals(999, $result);
 	}
 }
