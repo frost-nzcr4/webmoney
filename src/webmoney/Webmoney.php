@@ -7,6 +7,13 @@
  */
 class Webmoney extends WMXI {
 	/**
+	 * Last result.
+	 *
+	 * @var SimpleXMLElement
+	 */
+	private $lastResult = null;
+
+	/**
 	 * Transfer funds from one purse to another.
 	 *
 	 * Transfer by using X8 & X2 XML interfaces. X8 used to check destination
@@ -162,10 +169,15 @@ class Webmoney extends WMXI {
 
 		//return true;
 		$result = $this->X2($tranid, $src->getId(), $dst->getId(), $amount, $period, $pcode, $desc, $wminvid, $onlyauth);
+		$this->lastResult = $result;
 		if (0 === $result->ErrorCode()) {
 			// return true;
 		}
 		return array(true, $result, $result_dst, $result_src);
+	}
+
+	public function getLastResult() {
+		return $this->lastResult;
 	}
 }
 ?>
