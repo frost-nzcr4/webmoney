@@ -37,7 +37,7 @@ Usage
 
 Example of usage high-level logic class Webmoney:
 
-```php
+``` php
 require_once (__DIR__ . '/src/webmoney/Webmoney.php');
 $Webmoney = new Webmoney();
 $Webmoney->Light(/* params */);
@@ -46,7 +46,7 @@ $result = $Webmoney->transferFunds(/* params */);
 
 Example of usage X2 XML interface:
 
-```php
+``` php
 require_once (__DIR__ . '/src/webmoney/WMXI.php');
 $Wmxi = new WMXI();
 $Wmxi->Light(/* params */);
@@ -56,7 +56,7 @@ $result = $Wmxi->X2(/* params */);
 Purse
 ~~~~~
 
-```php
+``` php
 require_once (__DIR__ . '/src/webmoney/Purse.php');
 $Purse = new Purse('PURSE ID');
 if (!$Purse->isValid()) {

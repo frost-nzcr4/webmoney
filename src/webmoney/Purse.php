@@ -16,7 +16,7 @@ class Purse {
 	/**
 	 * Is purse valid.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	private $isValid = false;
 
@@ -75,7 +75,7 @@ class Purse {
 	/**
 	 * Check if purse is valid.
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isValid(Webmoney &$Webmoney) {
 		// :TODO: Purse should have access to WMXI::X8?
@@ -93,7 +93,7 @@ class Purse {
 	 * Test for valid Purse ID.
 	 *
 	 * @param mixed $purseId
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function testId($purseId) {
 		$purseId = strtoupper((string) $purseId);
@@ -109,7 +109,7 @@ class Purse {
 	 * Test for valid WMID.
 	 *
 	 * @param mixed $wmid
-	 * @return bool
+	 * @return boolean
 	 */
 	public static function testWmid($wmid) {
 		$wmid = (string) $wmid;
