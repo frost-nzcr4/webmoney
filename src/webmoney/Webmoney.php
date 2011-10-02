@@ -19,10 +19,10 @@ class Webmoney extends WMXI {
 	 * Transfer by using X8 & X2 XML interfaces. X8 used to check destination
 	 * purse that can accept funds transferring.
 	 *
-	 * @param Purse src    Source purse.
-	 * @param Purse dst    Destination purse.
-	 * @param int   amount Amount of the sum transferred.
-	 * @return bool
+	 * @param Purse   $src    Source purse.
+	 * @param Purse   $dst    Destination purse.
+	 * @param integer $amount Amount of the sum transferred.
+	 * @return boolean
 	 */
 	public function transferFunds(Purse $src, Purse $dst, $tranid, $amount, $period, $pcode, $desc, $wminvid, $onlyauth) {
 		if ($src == $dst) {
@@ -113,28 +113,17 @@ class Webmoney extends WMXI {
 		}
 
 		$result_src = $src->getResultX8();
-/*
-		$result_src = $this->X8($src->getWmid(), $src->getId());
-		if (1 !== $result_src->ErrorCode()) {
-			return array(false, $result_src);
-		}
-*/
+
 		// :TODO: should it be tested within purse?
 		if (
 			$src->getWmid() !== strval($result_src->toObject()->testwmpurse->wmid)
 			||
 			$src->getId() !== strval($result_src->toObject()->testwmpurse->purse)) {
-			return array(false, $result_src);
+			return false;
 		}
-/*
-		$result_dst = $this->X8($dst->getWmid(), $dst->getId());
-		if (1 !== $result_dst->ErrorCode()) {
-		  return array(false, $result_dst, $result_src);
-		}
-*/
+
 		if (!$dst->isValid($this)) {
 			throw new InvalidArgumentException('Argument $dst is invalid');
-		  //return array(false, $dst->getResultX8(), $result_src);
 		}
 
 		$result_dst = $src->getResultX8();
@@ -143,7 +132,7 @@ class Webmoney extends WMXI {
 			// The available attribute, if “1”, means that ALL incoming operations (direct payments,
 			// invoice payments, merchant.webmoney payments, X2 interface payments) are forbidden for ALL
 			// purses for the WM identifier that has been searched for.
-			return array(false, $result_dst, $result_src);
+			return false;
 		}
 
 		if (8 === (int) $result_dst->toObject()->testwmpurse->wmid->attributes()->themselfcorrstate) {
@@ -153,27 +142,25 @@ class Webmoney extends WMXI {
 			// from the right, so the decimal value 0 (binary 0000) means that the user has not set any
 			// restrictions, while the value of 8 (binary 1000) means that the user has forbidden
 			// incoming payments to the user’s purses from NONcorrespondents.
-			return array(false, $result_dst, $result_src);
+			return false;
 		}
 
 		if (1 === (int) $result_dst->toObject()->testwmpurse->purse->attributes()->merchant_allow_cashier) {
-		  // For the merchant_allow_cashier attribute, “1” means that for the purse in question,
-		  // payment acceptance through cash terminals to merchant.webmoney is enabled, and making
-		  // direct payments to the purse (including through the X2 interface) is forbidden, and
-		  // payments may be made to the purse only if the WMID has issued an invoice or through
-		  // merchant.webmoney.
-		  return array(false, $result_dst, $result_src);
+			// For the merchant_allow_cashier attribute, “1” means that for the purse in question,
+			// payment acceptance through cash terminals to merchant.webmoney is enabled, and making
+			// direct payments to the purse (including through the X2 interface) is forbidden, and
+			// payments may be made to the purse only if the WMID has issued an invoice or through
+			// merchant.webmoney.
+			return false;
 		}
 
-		//$result->GetResponse()->testwmpurse;
-
-		//return true;
 		$result = $this->X2($tranid, $src->getId(), $dst->getId(), $amount, $period, $pcode, $desc, $wminvid, $onlyauth);
 		$this->lastResult = $result;
 		if (0 === $result->ErrorCode()) {
-			// return true;
+			return true;
 		}
-		return array(true, $result, $result_dst, $result_src);
+
+		return false;
 	}
 
 	public function getLastResult() {
